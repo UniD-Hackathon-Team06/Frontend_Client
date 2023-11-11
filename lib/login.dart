@@ -1,8 +1,12 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:frontendclient/colors/color.dart';
-import 'package:frontendclient/home.dart';
+import 'package:http/http.dart' as http;
 import 'package:frontendclient/mainApp.dart';
 import 'package:frontendclient/signup.dart';
+
+import 'config/config_app.dart';
 
 
 void main() {
@@ -25,6 +29,36 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
+  Future<void> _sendPostRequest() async {
+    var url = Uri.parse(API.signup);
+    //API.sendphone
+    var response = await http.post(
+      url,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: json.encode({
+        "name": name,
+        "password": password,
+        "address": address,
+        "call": call,
+        "age": age
+      }), // JSON 형태로 인코딩
+    );
+
+    if (response.statusCode == 200) {
+      // 서버로부터 응답이 성공적으로 돌아온 경우 처리
+      print('Server returned OK');
+      print('Response body: ${response.body}');
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => LoginPage()),
+      );
+    } else {
+      // 오류가 발생한 경우 처리
+      print('Request failed with status: ${response.statusCode}.');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
