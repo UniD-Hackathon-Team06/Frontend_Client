@@ -48,6 +48,7 @@ Future<String> getToken() async {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  String _errorMessage = '';  // 오류 메시지를 저장할 변수
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final _formKey = GlobalKey<FormState>();
   Future<void> _sendPostRequest() async {
@@ -70,21 +71,27 @@ class _LoginPageState extends State<LoginPage> {
 
       var data =json.decode(response.body);
       var result = data['result'];
-      String accessToken = data['access_token'];
-      await saveToken(accessToken);
+
 
       if(result=='success'){
+        String accessToken = data['access_token'];
+        await saveToken(accessToken);
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => MainScreen()),
       );}
-      else {
-        // GlobalKey를 사용하여 Scaffold의 현재 context를 얻고 AlertDialog를 표시합니다.
-        _showLoginFailedDialog();
-      }
+      setState(() {
+        _errorMessage = '로그인에 실패하였습니다.';
+      });
+
     } else {
+      setState(() {
+        _errorMessage = '로그인에 실패하였습니다.';
+      });
       // 오류가 발생한 경우 처리
-      _showLoginFailedDialog(message: 'Server error: ${response.statusCode}');
+      setState(() {
+        _errorMessage = '로그인에 실패하였습니다.';
+      });
     }
   }
   void _showLoginFailedDialog({String message = 'Invalid username or password'}) {
@@ -202,6 +209,14 @@ class _LoginPageState extends State<LoginPage> {
                   },
                 ),
               ),
+
+          Visibility(
+            visible: _errorMessage.isNotEmpty,  // _errorMessage가 비어있지 않을 때만 보여집니다.
+            child: Text(
+              _errorMessage,
+              style: TextStyle(color: Colors.red),
+            ),
+          ),
               Container(
                 height: 48,
                 width: 350,

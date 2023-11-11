@@ -109,7 +109,7 @@ class _MyPageState extends State<MyPage>{
                     },
                   ),
                   SwitchListTile(
-                    title: Text('로그인 및 보안'),
+                    title: Text('센서 작동 설정'),
                     value: _loginAndSecurity,
                     onChanged: (bool value) {
                       setState(() {

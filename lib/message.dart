@@ -48,9 +48,9 @@ class _MessagePageState extends State<MessagePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.white,
         elevation: 0.0,
-        backgroundColor: Colors.transparent,
-        title: Text('홈 페이지'),
+        title: Text('안부인사'),
       ),
       body: ListView.builder(
         itemCount: messages.length,
