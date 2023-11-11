@@ -60,7 +60,6 @@ class _UserInfoFormState extends State<UserInfoForm> {
       // JSON 응답을 디코드합니다.
 
       // "result"와 "access_token" 값을 추출합니다.
-
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => LoginPage()),
@@ -68,8 +67,30 @@ class _UserInfoFormState extends State<UserInfoForm> {
 
     } else {
       // 오류가 발생한 경우 처리
-      print('Request failed with status: ${response.statusCode}.');
+      print('Server returned Fail');
+      print('Response body: ${response.body}');
+      _showLoginFailedDialog();
     }
+  }
+  void _showLoginFailedDialog({String message = '회원가입이 완료되지 않았습니다.'}) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('회원가입 실패'),
+          content: Text(message),
+          actions: <Widget>[
+            TextButton(
+              child: Text('닫기'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override

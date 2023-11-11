@@ -5,8 +5,9 @@ class ServerEndpoints {
 
 class API {
   static const String sendphone = "${ServerEndpoints.serverEndpoint}/auth/signup/phonenumber";
-  static const String checkphone = "${ServerEndpoints.serverEndpoint}/auth/check/phone";
+  static const String getmessages = "${ServerEndpoints.serverEndpoint}/messages";
   static const String reply = "${ServerEndpoints.serverEndpoint}/reply";
   static const String signup = "${ServerEndpoints.serverEndpoint}/users";
   static const String login = "${ServerEndpoints.serverEndpoint}/login";
+  static const String ME = "${ServerEndpoints.serverEndpoint}/login/test";
 }

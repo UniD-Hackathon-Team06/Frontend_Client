@@ -19,12 +19,16 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: MessageDetailPage(),
+      home: MessageDetailPage(messageData: {},),
     );
   }
 }
 
 class MessageDetailPage extends StatefulWidget {
+  final Map<String, String> messageData;
+
+  MessageDetailPage({Key? key, required this.messageData}) : super(key: key);
+
   @override
   _MessageDetailPageState createState() => _MessageDetailPageState();
 }
@@ -67,21 +71,41 @@ class _MessageDetailPageState extends State<MessageDetailPage> {
       // 서버로부터 응답이 성공적으로 돌아온 경우 처리
       print('Server returned OK');
       print('Response body: ${response.body}');
-      Navigator.pop(context);
+
       var data =json.decode(response.body);
       var result = data['result'];
 
       if(result=='success'){
-        print('success');
+        Navigator.pop(context);
         }
       else {
         // GlobalKey를 사용하여 Scaffold의 현재 context를 얻고 AlertDialog를 표시합니다.
-        print('Response body: ${response.body}');
+        _showLoginFailedDialog();
       }
     } else {
       // 오류가 발생한 경우 처리
-      print('Response body: ${response.body}');
+      _showLoginFailedDialog();
     }
+  }
+  void _showLoginFailedDialog({String message = '문자 전송이 완료되지 않았습니다.'}) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('문자전송 실패'),
+          content: Text(message),
+          actions: <Widget>[
+            TextButton(
+              child: Text('닫기'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
   final _formKey = GlobalKey<FormState>();
   String message ='';

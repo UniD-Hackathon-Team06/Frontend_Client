@@ -1,6 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:frontendclient/colors/color.dart';
+import 'package:http/http.dart' as http;
 
+import 'config/config_app.dart';
 import 'messagedetail.dart';
 // 기타 필요한 import 구문들...
 
@@ -29,13 +33,59 @@ class MessagePage extends StatefulWidget {
 
 class _MessagePageState extends State<MessagePage> {
   final List<Map<String, String>> messages = [
-    {'date': '2023-11-10', 'greeting': '오전 인사'},
-    {'date': '2023-11-10', 'greeting': '오후 인사'},
-    {'date': '2023-11-10', 'greeting': '저녁 인사'},
-    {'date': '2023-11-11', 'greeting': '오전 인사'},
-    {'date': '2023-11-11', 'greeting': '오후 인사'},
-    {'date': '2023-11-11', 'greeting': '저녁 인사'},
+    {"id": "1",'date': '2023-11-10', 'greeting': '오전 인사'},
+    {"id": "2",'date': '2023-11-10', 'greeting': '오후 인사'},
+    {"id": "3",'date': '2023-11-10', 'greeting': '저녁 인사'},
+    {"id": "4",'date': '2023-11-11', 'greeting': '오전 인사'},
+    {"id": "5",'date': '2023-11-11', 'greeting': '오후 인사'},
+    {"id": "6",'date': '2023-11-11', 'greeting': '저녁 인사'},
   ];
+  Future<void> _sendGetRequest() async {
+    var url = Uri.parse(API.getmessages);
+    String savedToken = await getToken();
+    var response = await http.get(
+      url,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer $savedToken',
+
+      },
+      // JSON 형태로 인코딩
+    );
+    if (response.statusCode == 200) {
+      print('Server returned OK');
+      print('Response body: ${response.body}');
+      var data = json.decode(response.body);
+      var id = data['id'];
+      var message=data["message"];
+
+      setState(() {
+
+      });
+    } else {
+      _showLoginFailedDialog();
+    }
+  }
+  void _showLoginFailedDialog({String message = '유효하지 않은 정보이거나, 비밀번호가 틀렸습니다.'}) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('로그인 실패'),
+          content: Text(message),
+          actions: <Widget>[
+            TextButton(
+              child: Text('닫기'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
   int _selectedIndex = 0;
 
   void _onItemTapped(int index) {
@@ -43,7 +93,11 @@ class _MessagePageState extends State<MessagePage> {
       _selectedIndex = index;
     });
   }
-
+  @override
+  void initState() {
+    super.initState();
+    _sendGetRequest();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -61,7 +115,14 @@ class _MessagePageState extends State<MessagePage> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => MessageDetailPage()),
+                  MaterialPageRoute(
+                    builder: (context) => MessageDetailPage(
+                      messageData: {
+                        "id":$index,
+                        "message": messages[index+1]['message']!, // 'message' 키가 있는 것으로 가정
+                      },
+                    ),
+                  ),
                 );
               },
               child: ListTile(

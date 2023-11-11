@@ -80,31 +80,30 @@ class _LoginPageState extends State<LoginPage> {
         context,
         MaterialPageRoute(builder: (context) => MainScreen()),
       );}
-      setState(() {
-        _errorMessage = '로그인에 실패하였습니다.';
-      });
-
+else {
+        _showLoginFailedDialog();
+      }
     } else {
-      setState(() {
-        _errorMessage = '로그인에 실패하였습니다.';
-      });
+      // setState(() {
+      //   _errorMessage = '로그인에 실패하였습니다.';
+      // });
       // 오류가 발생한 경우 처리
       setState(() {
-        _errorMessage = '로그인에 실패하였습니다.';
+        _showLoginFailedDialog();
       });
     }
   }
-  void _showLoginFailedDialog({String message = 'Invalid username or password'}) {
+  void _showLoginFailedDialog({String message = '유효하지 않은 정보이거나, 비밀번호가 틀렸습니다.'}) {
     showDialog(
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Login Failed'),
+          title: Text('로그인 실패'),
           content: Text(message),
           actions: <Widget>[
             TextButton(
-              child: Text('Close'),
+              child: Text('닫기'),
               onPressed: () {
                 Navigator.of(context).pop();
               },

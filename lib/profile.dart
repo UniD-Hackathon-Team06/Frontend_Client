@@ -1,9 +1,10 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:frontendclient/colors/color.dart';
-import 'package:frontendclient/home.dart';
-import 'package:frontendclient/login.dart';
-import 'package:frontendclient/mainApp.dart';
-import 'package:frontendclient/signup.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
+import 'config/config_app.dart';
+
 
 void main() {
   runApp(MyApp());
@@ -18,6 +19,7 @@ class MyApp extends StatelessWidget {
       home: ProfilePage(),
     );
   }
+
 }
 
 class ProfilePage extends StatefulWidget {
@@ -26,12 +28,81 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  final String name = 'John Doe';
-  final String address = '123 Main St';
-  final String age = '30';
-  final String call = '555-1234';
+   String name = '';
+   String address = '';
+   String age = '';
+   String call = '';
   final _formKey = GlobalKey<FormState>();
+  Future<void> saveToken(String token) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('signupToken', token);
+    // 저장된 값을 확인하기 위해 바로 불러옵니다.
+    String savedToken = prefs.getString('signupToken') ?? 'No Token';
+    print('Saved Token: $savedToken'); // 콘솔에 출력하여 확인
+  }
 
+// 저장된 토큰을 불러오는 함수
+  Future<String> getToken() async {
+    final prefs = await SharedPreferences.getInstance();
+    // 'signupToken' 키를 사용하여 저장된 토큰 값을 가져옵니다.
+    // 값이 없을 경우 'No Token'을 반환합니다.
+    String token = prefs.getString('signupToken') ?? 'No Token';
+    return token;
+  }
+  Future<void> _sendGetRequest() async {
+    var url = Uri.parse(API.ME);
+    String savedToken = await getToken();
+    var response = await http.get(
+      url,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer $savedToken',
+
+      },
+      // JSON 형태로 인코딩
+    );
+    if (response.statusCode == 200) {
+      print('Server returned OK');
+      print('Response body: ${response.body}');
+
+      var data = json.decode(response.body);
+      var userData = data['user'];
+
+      setState(() {
+        name = userData['name'];
+        address = userData['address'];
+        age = userData['age'].toString(); // int를 String으로 변환
+        call = userData['call'];
+      });
+    } else {
+      _showLoginFailedDialog();
+    }
+  }
+  void _showLoginFailedDialog({String message = '유효하지 않은 정보이거나, 비밀번호가 틀렸습니다.'}) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('로그인 실패'),
+          content: Text(message),
+          actions: <Widget>[
+            TextButton(
+              child: Text('닫기'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+  @override
+  void initState() {
+    super.initState();
+    _sendGetRequest();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -112,7 +183,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   borderRadius: BorderRadius.circular(4.0),
                 ),
                 child: Text(
-                  name,
+                  address,
                   style: TextStyle(fontSize: 16.0),
                 ),
               ),
