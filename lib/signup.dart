@@ -9,6 +9,8 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
+  final _formKey = GlobalKey<FormState>();
+  String? _selectedAge;
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -45,7 +47,7 @@ class _UserInfoFormState extends State<UserInfoForm> {
               Container(
                 alignment: Alignment.topLeft,
                 width: 200,
-                height: 80,
+                height: 45,
                 child: Text(
                   '다음 정보를 입력해 주세요.',
                   style: TextStyle(
@@ -71,7 +73,54 @@ class _UserInfoFormState extends State<UserInfoForm> {
                   },
                 ),
               ),
-              SizedBox(height: 40,),
+              Container(
+                margin: EdgeInsets.only(bottom: 20.0),
+                child: TextFormField(
+                  decoration: InputDecoration(
+                    labelText: '주소',
+                    border: OutlineInputBorder(),
+                    prefixIcon: Icon(Icons.home),
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return '주소를 입력해주세요.';
+                    }
+                    return null;
+                  },
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.only(bottom: 20.0),
+                child: TextFormField(
+                  decoration: InputDecoration(
+                    labelText: '나이',
+                    border: OutlineInputBorder(),
+                    prefixIcon: Icon(Icons.access_time_filled),
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return '나이를 입력해주세요.';
+                    }
+                    return null;
+                  },
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.only(bottom: 20.0),
+                child: TextFormField(
+                  decoration: InputDecoration(
+                    labelText: '연락처',
+                    border: OutlineInputBorder(),
+                    prefixIcon: Icon(Icons.account_box_rounded),
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return '연락처를 입력해주세요.';
+                    }
+                    return null;
+                  },
+                ),
+              ),
               Container(
                 margin: EdgeInsets.only(bottom: 20.0),
                 child: TextFormField(
@@ -88,7 +137,6 @@ class _UserInfoFormState extends State<UserInfoForm> {
                   },
                 ),
               ),
-              SizedBox(height: 40,),
               Container(
                 margin: EdgeInsets.only(bottom: 20.0),
                 child: TextFormField(
@@ -106,7 +154,7 @@ class _UserInfoFormState extends State<UserInfoForm> {
                   },
                 ),
               ),
-              SizedBox(height: 120,),
+              SizedBox(height: 20,),
 
               Container(
                 height: 48,
