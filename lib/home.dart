@@ -26,7 +26,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int _selectedIndex = 0; // 현재 선택된 탭 인덱스
+  int _selectedIndex = 1; // 현재 선택된 탭 인덱스
 
   void _onItemTapped(int index) {
     setState(() {
@@ -192,25 +192,24 @@ Container(
             ],
           ),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Column(
                   mainAxisSize: MainAxisSize.min, // Column 크기를 자식에 맞춤
                   children:[
-                    Text('날짜',
+                    Text('매니저님과 안부인사 \n 나눌 시간이에요',
                       style: TextStyle(
-                        fontSize: 25,
-                        fontWeight: FontWeight.w700,
-                        fontFamily: 'Pretendard',
-                        color: Colors.grey,
-                      ),),
-                    SizedBox(height: 10,),
-                    Text('2023.11.11',
-                      style: TextStyle(
-                          fontSize: 20
+                        fontSize: 22,
+                        fontWeight: FontWeight.w500,
+                        fontFamily: 'Pretendard-Medium',
                       ),),
                   ]),
-              Icon(Icons.cloud, size: 48.0), // 구름 아이콘
+              Container(
+                width: 50,
+                height: 100,
+                child: Image.asset('assets/images/carer.png'),
+              )
+
             ],
           ),
         ),

@@ -62,6 +62,7 @@ flutter:
   assets:
    - assets/images/firstlogo.png
    - assets/images/granddaddy.png
+   - assets/images/carer.png
 
   fonts:
      - family: Pretendard
