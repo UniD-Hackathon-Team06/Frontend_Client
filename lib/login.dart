@@ -118,8 +118,6 @@ class _LoginPageState extends State<LoginPage> {
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
                     // 로그인 로직 처리
-                    ScaffoldMessenger.of(context)
-                        .showSnackBar(SnackBar(content: Text('로그인 처리 중...')));
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => MainScreen()), // RegisterScreen()을 새로운 화면으로 변경하세요.

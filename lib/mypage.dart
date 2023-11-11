@@ -1,58 +1,133 @@
 import 'package:flutter/material.dart';
-import 'package:frontendclient/colors/color.dart';
-// 기타 필요한 import 구문들...
+import 'package:frontendclient/login.dart';
 
-void main() {
-  runApp(MyApp());
-}
+import 'colors/color.dart';
 
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Home Page',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: MyPage(),
-    );
-  }
-}
-
-class MyPage extends StatefulWidget {
-  @override
-  _MyPageState createState() => _MyPageState();
-}
-
-class _MyPageState extends State<MyPage> {
-
-
+class MyPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         elevation: 0.0,
-        backgroundColor: Colors.transparent,
-        title: Text('홈 페이지'),
+          backgroundColor: Colors.transparent,
       ),
-      body: ListView.builder(
-        itemCount: 5, // 예시로 5개의 카드를 생성, 실제 데이터 수에 맞게 조정 필요
-        itemBuilder: (BuildContext context, int index) {
-          return Card(
-            margin: EdgeInsets.all(10),
-            child: ListTile(
-              leading: CircleAvatar(
-                backgroundImage: AssetImage('assets/images/granddaddy.png'),
-                radius: 30,
-              ),
-              title: Text('실버케어 메시지'),
-              subtitle: Text('2023-11-10 오전 인사'),
-              trailing: Icon(Icons.more_vert),
-            ),
-          );
-        },
-      ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            // 이름 표시
+            Column(
+              children: [
+                Container(
+                  height: 120,
+                  width:340,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.5),
+                        spreadRadius: 2,
+                        blurRadius: 7,
+                        offset: Offset(0, 3), // changes position of shadow
+                      ),
+                    ],
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly, // 중앙 정렬을 위해 추가
 
+                    children: [
+                      // 이미지 추가
+                      Container(
+                        width: 50,
+                        height: 50,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage('assets/images/firstlogo.png'),
+                          ),
+                        ),
+                      ),
+                      // 텍스트
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center, // 중앙에 배치
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            '이현정님',
+                            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                          ),
+                          Text(
+                            '프로필 열기',
+                            style: TextStyle(fontSize: 14, color: Colors.grey),
+                          ),
+                        ],
+                      ),
+                      Icon(Icons.add)
+                    ],
+                  ),
+
+                ),
+                // 버튼 추가
+              ],
+            ),
+
+
+            SizedBox(height: 20),
+            // 계정 관리 섹션
+            Container(
+              padding: EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    '계정관리',
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  ),
+                  ListTile(title: Text('개인 정보')),
+                  ListTile(title: Text('로그인 및 보안')),
+                  ListTile(title: Text('알림 설정')),
+                ],
+              ),
+            ),
+            // 도움말 섹션
+
+            // 로그아웃 버튼
+            Container(
+              height: 48,
+              width: 350,
+              child:
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: Color(DefinedColor.lightblue),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  elevation: 0,
+                  padding: EdgeInsets.all(0),
+                ),
+                onPressed: () {
+                  {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => LoginPage()), // RegisterScreen()을 새로운 화면으로 변경하세요.
+                    );
+                  }
+                },
+                child: Text('로그아웃',
+                  style: TextStyle(
+                    fontSize: 20,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
+}
+
+void main() {
+  runApp(MaterialApp(
+    home: MyPage(),
+  ));
 }
