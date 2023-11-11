@@ -154,7 +154,7 @@ Container(
         ],
       ),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           Column(
               mainAxisSize: MainAxisSize.min, // Column 크기를 자식에 맞춤
@@ -166,7 +166,12 @@ Container(
                     fontFamily: 'Pretendard-Medium',
                   ),),
               ]),
-          Icon(Icons.cloud, size: 48.0), // 구름 아이콘
+          Container(
+            width: 45,
+            height: 100,
+            child: Image.asset('assets/images/granddaddy.png'),
+          )
+
         ],
       ),
     ),
