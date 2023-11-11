@@ -31,9 +31,20 @@ class _UserInfoFormState extends State<UserInfoForm> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.white, //appBar 투명색
+      appBar:AppBar(
+        backgroundColor: Colors.white,
         elevation: 0.0,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: Colors.black),
+          onPressed: () {
+            if (Navigator.canPop(context)) {
+              Navigator.pop(context);
+            } else {
+              // 첫 페이지에서는 종료할 수 있도록 하거나 다른 동작을 수행합니다.
+              // 예: SystemNavigator.pop()을 사용하여 앱을 종료할 수 있습니다.
+            }
+          },
+        ),
       ),
       body: Padding(
         padding: EdgeInsets.all(16.0),

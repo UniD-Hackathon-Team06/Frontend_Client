@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:frontendclient/colors/color.dart';
+
+import 'messagedetail.dart';
 // 기타 필요한 import 구문들...
 
 void main() {
@@ -55,23 +57,32 @@ class _MessagePageState extends State<MessagePage> {
         itemBuilder: (BuildContext context, int index) {
           return Card(
             margin: EdgeInsets.all(10),
-            child: ListTile(
-              leading: Container(
-                width: 32.8, // 이미지의 너비 설정
-                height: 50, // 이미지의 높이 설정
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage('assets/images/carer.png'),
-                    fit: BoxFit.fill, // 이미지가 컨테이너 영역을 가득 채우도록 설정
+            child: InkWell(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => MessageDetailPage()),
+                );
+              },
+              child: ListTile(
+                leading: Container(
+                  width: 32.8, // 이미지의 너비 설정
+                  height: 50, // 이미지의 높이 설정
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage('assets/images/carer.png'),
+                      fit: BoxFit.fill, // 이미지가 컨테이너 영역을 가득 채우도록 설정
+                    ),
+                    borderRadius: BorderRadius.circular(8), // 이미지의 모서리를 약간 둥글게
                   ),
-                  borderRadius: BorderRadius.circular(8), // 이미지의 모서리를 약간 둥글게
                 ),
+                subtitle: Text(messages[index]['date']!+' '+ messages[index]['greeting']!),
+                title: Text('실버케어 매니저 김삼순'),
+                trailing: Icon(Icons.message),
               ),
-              subtitle: Text(messages[index]['date']!+' '+ messages[index]['greeting']!),
-              title: Text('실버케어 매니저 김삼순'),
-              trailing: Icon(Icons.message),
             ),
           );
+
         },
       ),
 

@@ -2,10 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:frontendclient/login.dart';
 
 import 'colors/color.dart';
-
-class MyPage extends StatelessWidget {
+// StatefulWidget으로 변경합니다.
+class MyPage extends StatefulWidget {
+  @override
+  _MyPageState createState() => _MyPageState();
+}
+class _MyPageState extends State<MyPage>{
+  bool _personalInfo = false;
+  bool _loginAndSecurity = false;
+  bool _notificationSettings = false;
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
         elevation: 0.0,
@@ -34,7 +42,6 @@ class MyPage extends StatelessWidget {
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly, // 중앙 정렬을 위해 추가
-
                     children: [
                       // 이미지 추가
                       Container(
@@ -83,9 +90,33 @@ class MyPage extends StatelessWidget {
                     '계정관리',
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
-                  ListTile(title: Text('개인 정보')),
-                  ListTile(title: Text('로그인 및 보안')),
-                  ListTile(title: Text('알림 설정')),
+                  SwitchListTile(
+                    title: Text('개인 정보'),
+                    value: _personalInfo,
+                    onChanged: (bool newvalue) {
+                      setState(() {
+                        _personalInfo = newvalue;
+                      });
+                    },
+                  ),
+                  SwitchListTile(
+                    title: Text('로그인 및 보안'),
+                    value: _loginAndSecurity,
+                    onChanged: (bool value) {
+                      setState(() {
+                        _loginAndSecurity = value;
+                      });
+                    },
+                  ),
+                  SwitchListTile(
+                    title: Text('알림 설정'),
+                    value: _notificationSettings,
+                    onChanged: (bool value) {
+                      setState(() {
+                        _notificationSettings = value;
+                      });
+                    },
+                  ),
                 ],
               ),
             ),
