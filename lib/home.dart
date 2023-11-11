@@ -124,6 +124,7 @@ class _HomePageState extends State<HomePage> {
                fontSize: 25,
                fontWeight: FontWeight.w600,
                fontFamily: 'Pretendard',
+               color: Colors.grey,
              ),),
               SizedBox(height: 10,),
               Text('2023.11.11',
@@ -160,9 +161,9 @@ Container(
               children:[
                 Text('강수 확률이 높아요\n우산을 챙기세요',
                   style: TextStyle(
-                    fontSize: 25,
+                    fontSize: 22,
                     fontWeight: FontWeight.w500,
-                    fontFamily: 'Pretendard',
+                    fontFamily: 'Pretendard-Medium',
                   ),),
               ]),
           Icon(Icons.cloud, size: 48.0), // 구름 아이콘
@@ -196,6 +197,7 @@ Container(
                         fontSize: 25,
                         fontWeight: FontWeight.w700,
                         fontFamily: 'Pretendard',
+                        color: Colors.grey,
                       ),),
                     SizedBox(height: 10,),
                     Text('2023.11.11',
