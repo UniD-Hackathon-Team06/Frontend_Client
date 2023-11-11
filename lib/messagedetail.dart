@@ -116,6 +116,9 @@ class _MessageDetailPageState extends State<MessageDetailPage> {
   }
   @override
   Widget build(BuildContext context) {
+    print("Message Data: ${widget.messageData}");
+    final messagesent= widget.messageData['message'];
+    final title= widget.messageData['title'];
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
@@ -149,7 +152,7 @@ class _MessageDetailPageState extends State<MessageDetailPage> {
                 width: 200,
                 height: 50,
                 child: Text(
-                  '2023-11-10 오전인사',
+                  title!,
                   style: TextStyle(
                       fontSize: 28,
                       fontWeight: FontWeight.w700,
@@ -162,7 +165,7 @@ class _MessageDetailPageState extends State<MessageDetailPage> {
                 width: 200,
                 height: 45,
                 child: Text(
-                  '매니저 안부 인사 내용',
+                    '받은 안부 인사',
                   style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.w500,
@@ -180,7 +183,7 @@ class _MessageDetailPageState extends State<MessageDetailPage> {
                 ),
                 alignment: Alignment.topLeft, // 텍스트를 상단 왼쪽에 정렬
                 child: Text(
-                  '안녕하세요 매니저 김삼순입니다. 날씨가 쌀쌀한데 어떻게 지내시나 궁금하여 안부인사 드립니다.',
+                  messagesent!,
                   style: TextStyle(
                     fontSize: 25, // 폰트 크기
                     // 필요하다면 여기에 폰트 스타일 추가

@@ -32,6 +32,8 @@ class MessagePage extends StatefulWidget {
 }
 
 class _MessagePageState extends State<MessagePage> {
+  List<Map<String, dynamic>> comemessages = []; // 메시지를 저장할 리스트
+
   final List<Map<String, String>> messages = [
     {"id": "1",'date': '2023-11-10', 'greeting': '오전 인사'},
     {"id": "2",'date': '2023-11-10', 'greeting': '오후 인사'},
@@ -55,13 +57,14 @@ class _MessagePageState extends State<MessagePage> {
     if (response.statusCode == 200) {
       print('Server returned OK');
       print('Response body: ${response.body}');
-      var data = json.decode(response.body);
-      var id = data['id'];
-      var message=data["message"];
-
+      var data = json.decode(response.body) as List;
       setState(() {
-
+        comemessages = data.map((messageJson) => {
+          "id": messageJson["id"],
+          "message": messageJson["message"]
+        }).toList();
       });
+      print(comemessages);
     } else {
       _showLoginFailedDialog();
     }
@@ -118,8 +121,8 @@ class _MessagePageState extends State<MessagePage> {
                   MaterialPageRoute(
                     builder: (context) => MessageDetailPage(
                       messageData: {
-                        "id":$index,
-                        "message": messages[index+1]['message']!, // 'message' 키가 있는 것으로 가정
+                        "message": comemessages[index]['message']!, // 'message' 키가 있는 것으로 가정
+                        "title":messages[index]['date']!+ ' '+messages[index]['greeting']!,
                       },
                     ),
                   ),
