@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:frontendclient/colors/color.dart';
 import 'package:frontendclient/home.dart';
-import 'package:frontendclient/signin.dart';
+import 'package:frontendclient/signup.dart';
 
 
 void main() {
@@ -28,6 +28,8 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
+
       backgroundColor: Colors.white,
       appBar: AppBar(
           backgroundColor: Colors.white, //appBar 투명색

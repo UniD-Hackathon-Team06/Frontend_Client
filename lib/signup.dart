@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:frontendclient/colors/color.dart';
 import 'package:frontendclient/home.dart';
 import 'package:frontendclient/login.dart';
-import 'package:frontendclient/signin.dart';
+import 'package:frontendclient/signup.dart';
 
 void main() {
   runApp(MyApp());

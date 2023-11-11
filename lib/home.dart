@@ -50,11 +50,11 @@ class _HomePageState extends State<HomePage> {
         Container(
           alignment: Alignment.topLeft,
           width: 223,
-          height: 54,
+          height: 58,
           child: Text(
             'SilverCare.',
             style: TextStyle(
-                fontSize: 40,
+                fontSize: 45,
                 fontWeight: FontWeight.w700,
                 color: Color(DefinedColor.lightblue),
                 fontFamily: 'Pretendard'),
