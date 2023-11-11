@@ -82,10 +82,10 @@ class _HomePageState extends State<HomePage> {
 
         Container(
           alignment: Alignment.topLeft,
-          width: 223,
+          width: 228,
           height: 58,
           child: Text(
-            'SilverCare.',
+            'SilverCare',
             style: TextStyle(
                 fontSize: 45,
                 fontWeight: FontWeight.w700,
@@ -160,7 +160,7 @@ class _HomePageState extends State<HomePage> {
                color: Colors.grey,
              ),),
               SizedBox(height: 10,),
-              Text('2023.11.11',
+              Text('2023.11.12',
               style: TextStyle(
                 fontSize: 20,
                 fontFamily: 'Pretendard',

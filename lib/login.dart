@@ -84,13 +84,7 @@ else {
         _showLoginFailedDialog();
       }
     } else {
-      // setState(() {
-      //   _errorMessage = '로그인에 실패하였습니다.';
-      // });
-      // 오류가 발생한 경우 처리
-      setState(() {
-        _showLoginFailedDialog();
-      });
+      _showLoginFailedDialog();
     }
   }
   void _showLoginFailedDialog({String message = '유효하지 않은 정보이거나, 비밀번호가 틀렸습니다.'}) {

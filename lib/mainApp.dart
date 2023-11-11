@@ -10,7 +10,7 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  int _selectedIndex = 0; // 현재 선택된 탭 인덱스
+  int _selectedIndex = 1; // 현재 선택된 탭 인덱스
 
   // 각 인덱스에 해당하는 페이지 위젯들을 리스트로 관리합니다.
   final List<Widget> _pageOptions = [

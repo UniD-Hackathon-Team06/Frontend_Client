@@ -58,24 +58,27 @@ class _MessagePageState extends State<MessagePage> {
       print('Server returned OK');
       print('Response body: ${response.body}');
       var data = json.decode(response.body) as List;
+      // List를 역순으로 만들고, 각 메시지의 JSON을 Map으로 변환하여 새 List를 생성합니다.
+      var reversedMessages = data.reversed.map((messageJson) => {
+        "id": messageJson["id"],
+        "message": messageJson["message"]
+      }).toList();
+      // 상태 업데이트
       setState(() {
-        comemessages = data.map((messageJson) => {
-          "id": messageJson["id"],
-          "message": messageJson["message"]
-        }).toList();
+        comemessages = reversedMessages;
       });
       print(comemessages);
     } else {
       _showLoginFailedDialog();
     }
   }
-  void _showLoginFailedDialog({String message = '유효하지 않은 정보이거나, 비밀번호가 틀렸습니다.'}) {
+  void _showLoginFailedDialog({String message = '매니저님이 바쁘신가봐요'}) {
     showDialog(
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('로그인 실패'),
+        return AlertDialog(😢
+          title: Text('안부인사가 늦으시네요...'),
           content: Text(message),
           actions: <Widget>[
             TextButton(
@@ -116,18 +119,27 @@ class _MessagePageState extends State<MessagePage> {
             margin: EdgeInsets.all(10),
             child: InkWell(
               onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => MessageDetailPage(
-                      messageData: {
+                if (index < comemessages.length && index < messages.length) {
+                  var messageData = {
+                    "message": comemessages[index]['message']!, // 'message' 키가 있는 것으로 가정
+                    "title": messages[index]['date']! + ' ' + messages[index]['greeting']!,
+                  };
+
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => MessageDetailPage(messageData: {
                         "message": comemessages[index]['message']!, // 'message' 키가 있는 것으로 가정
                         "title":messages[index]['date']!+ ' '+messages[index]['greeting']!,
-                      },
+                      },),
                     ),
-                  ),
-                );
+                  );
+                } else {
+                  _showLoginFailedDialog();
+                }
+
               },
+
               child: ListTile(
                 leading: Container(
                   width: 32.8, // 이미지의 너비 설정
