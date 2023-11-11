@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:frontendclient/colors/color.dart';
 import 'package:frontendclient/login.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 void main() {
   runApp(MyApp());
@@ -19,7 +20,6 @@ class MyApp extends StatelessWidget {
   }
 }
 
-// HomePage를 StatefulWidget으로 변경
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
@@ -27,13 +27,46 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _selectedIndex = 1; // 현재 선택된 탭 인덱스
+  final FlutterLocalNotificationsPlugin _flutterLocalNotificationsPlugin =
+  FlutterLocalNotificationsPlugin();
 
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
+  @override
+  void initState() {
+    super.initState();
+    _initializeNotifications();
   }
 
+  Future<void> _initializeNotifications() async {
+    // 알림 설정 초기화
+    const AndroidInitializationSettings initializationSettingsAndroid =
+    AndroidInitializationSettings('@mipmap/ic_launcher');
+    const InitializationSettings initializationSettings =
+    InitializationSettings(
+        android: initializationSettingsAndroid,
+        );
+
+    await _flutterLocalNotificationsPlugin.initialize(
+      initializationSettings,
+    );
+  }
+
+  Future<void> _showNotification() async {
+    // 알림 세부사항 설정
+    const AndroidNotificationDetails androidPlatformChannelSpecifics =
+    AndroidNotificationDetails(
+        'your channel id', 'your channel name',
+        importance: Importance.max, priority: Priority.high, showWhen: false);
+    const NotificationDetails platformChannelSpecifics =
+    NotificationDetails(android: androidPlatformChannelSpecifics);
+
+    await _flutterLocalNotificationsPlugin.show(
+      0, // 알림 ID
+      '테스트 알림 제목', // 알림 제목
+      '테스트 알림 본문', // 알림 본문
+      platformChannelSpecifics,
+      payload: 'item x',
+    );
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -215,27 +248,6 @@ Container(
         ),
       ],
     ),
-      // BottomNavigationBar 추가
-      // bottomNavigationBar: BottomNavigationBar(
-      //   items: <BottomNavigationBarItem>[
-      //
-      //     BottomNavigationBarItem(
-      //       icon: Icon(Icons.question_answer),
-      //       label: '안부인사',
-      //     ),
-      //     BottomNavigationBarItem(
-      //       icon: Icon(Icons.home),
-      //       label: '홈',
-      //     ),
-      //     BottomNavigationBarItem(
-      //       icon: Icon(Icons.person),
-      //       label: '마이페이지',
-      //     ),
-      //   ],
-      //   currentIndex: _selectedIndex,
-      //   selectedItemColor: Color(DefinedColor.lightblue),
-      //   onTap: _onItemTapped,
-      // ),
     );
   }
 }

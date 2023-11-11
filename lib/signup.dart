@@ -57,10 +57,15 @@ class _UserInfoFormState extends State<UserInfoForm> {
       // 서버로부터 응답이 성공적으로 돌아온 경우 처리
       print('Server returned OK');
       print('Response body: ${response.body}');
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => LoginPage()),
-      );
+      // JSON 응답을 디코드합니다.
+
+      // "result"와 "access_token" 값을 추출합니다.
+
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => LoginPage()),
+        );
+
     } else {
       // 오류가 발생한 경우 처리
       print('Request failed with status: ${response.statusCode}.');
@@ -235,7 +240,7 @@ class _UserInfoFormState extends State<UserInfoForm> {
                     return null;
                   },
                   onChanged: (value) {
-                    InputCall(value);
+                    InputPassword(value);
                   },
                 ),
               ),

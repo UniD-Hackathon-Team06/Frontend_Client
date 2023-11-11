@@ -5,7 +5,7 @@ import 'package:frontendclient/colors/color.dart';
 import 'package:http/http.dart' as http;
 import 'package:frontendclient/mainApp.dart';
 import 'package:frontendclient/signup.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
 import 'config/config_app.dart';
 
 
@@ -23,15 +23,35 @@ class MyApp extends StatelessWidget {
 }
 
 class LoginPage extends StatefulWidget {
+  String name = '';
+  String password = '';
+
   @override
   _LoginPageState createState() => _LoginPageState();
 }
 
+Future<void> saveToken(String token) async {
+  final prefs = await SharedPreferences.getInstance();
+  await prefs.setString('signupToken', token);
+  // 저장된 값을 확인하기 위해 바로 불러옵니다.
+  String savedToken = prefs.getString('signupToken') ?? 'No Token';
+  print('Saved Token: $savedToken'); // 콘솔에 출력하여 확인
+}
+
+// 저장된 토큰을 불러오는 함수
+Future<String> getToken() async {
+  final prefs = await SharedPreferences.getInstance();
+  // 'signupToken' 키를 사용하여 저장된 토큰 값을 가져옵니다.
+  // 값이 없을 경우 'No Token'을 반환합니다.
+  String token = prefs.getString('signupToken') ?? 'No Token';
+  return token;
+}
+
 class _LoginPageState extends State<LoginPage> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final _formKey = GlobalKey<FormState>();
   Future<void> _sendPostRequest() async {
-    var url = Uri.parse(API.signup);
-    //API.sendphone
+    var url = Uri.parse(API.login);
     var response = await http.post(
       url,
       headers: <String, String>{
@@ -40,9 +60,6 @@ class _LoginPageState extends State<LoginPage> {
       body: json.encode({
         "name": name,
         "password": password,
-        "address": address,
-        "call": call,
-        "age": age
       }), // JSON 형태로 인코딩
     );
 
@@ -50,19 +67,62 @@ class _LoginPageState extends State<LoginPage> {
       // 서버로부터 응답이 성공적으로 돌아온 경우 처리
       print('Server returned OK');
       print('Response body: ${response.body}');
+
+      var data =json.decode(response.body);
+      var result = data['result'];
+      String accessToken = data['access_token'];
+      await saveToken(accessToken);
+
+      if(result=='success'){
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => LoginPage()),
-      );
+        MaterialPageRoute(builder: (context) => MainScreen()),
+      );}
+      else {
+        // GlobalKey를 사용하여 Scaffold의 현재 context를 얻고 AlertDialog를 표시합니다.
+        _showLoginFailedDialog();
+      }
     } else {
       // 오류가 발생한 경우 처리
-      print('Request failed with status: ${response.statusCode}.');
+      _showLoginFailedDialog(message: 'Server error: ${response.statusCode}');
     }
+  }
+  void _showLoginFailedDialog({String message = 'Invalid username or password'}) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Login Failed'),
+          content: Text(message),
+          actions: <Widget>[
+            TextButton(
+              child: Text('Close'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+  void InputName(String value) {
+    setState(() {
+      name = value;
+    });
+  }
+  @override
+  void InputPassword(String value) {
+    setState(() {
+      password = value;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey, // Scaffold에 GlobalKey 할당
       resizeToAvoidBottomInset: false,
 
       backgroundColor: Colors.white,
@@ -117,6 +177,9 @@ class _LoginPageState extends State<LoginPage> {
                     }
                     return null;
                   },
+                  onChanged: (value) {
+                    InputName(value);
+                  },
                 ),
               ),
               Container(
@@ -133,6 +196,9 @@ class _LoginPageState extends State<LoginPage> {
                       return '비밀번호를 입력해주세요.';
                     }
                     return null;
+                  },
+                  onChanged: (value) {
+                    InputPassword(value);
                   },
                 ),
               ),
@@ -151,11 +217,8 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
+                    _sendPostRequest();
                     // 로그인 로직 처리
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => MainScreen()), // RegisterScreen()을 새로운 화면으로 변경하세요.
-                    );
                   }
                 },
                 child: Text('로그인',

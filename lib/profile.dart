@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:frontendclient/colors/color.dart';
 import 'package:frontendclient/home.dart';
 import 'package:frontendclient/login.dart';
+import 'package:frontendclient/mainApp.dart';
 import 'package:frontendclient/signup.dart';
 
 void main() {
@@ -25,6 +26,10 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  final String name = 'John Doe';
+  final String address = '123 Main St';
+  final String age = '30';
+  final String call = '555-1234';
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -60,7 +65,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 width: 200,
                 height: 45,
                 child: Text(
-                  '다음 정보를 입력해 주세요.',
+                  '프로필',
                   style: TextStyle(
                       fontSize: 28,
                       fontWeight: FontWeight.w700,
@@ -68,104 +73,94 @@ class _ProfilePageState extends State<ProfilePage> {
                       fontFamily: 'Pretendard'),
                 ),
               ),
+
+              Text(
+                '이름',
+                style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w700,
+                    color: (Colors.black),
+                    fontFamily: 'Pretendard'),
+              ),
+              SizedBox(height: 5,),
               Container(
                 margin: EdgeInsets.only(bottom: 20.0),
-                child: TextFormField(
-                  decoration: InputDecoration(
-                    labelText: '이름',
-                    border: OutlineInputBorder(),
-                    prefixIcon: Icon(Icons.account_circle),
-                  ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return '이름을 입력해주세요.';
-                    }
-                    return null;
-                  },
+                padding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.grey),
+                  borderRadius: BorderRadius.circular(4.0),
+                ),
+                child: Text(
+                  name,
+                  style: TextStyle(fontSize: 16.0),
                 ),
               ),
+              Text(
+                '주소',
+                style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w700,
+                    color: (Colors.black),
+                    fontFamily: 'Pretendard'),
+              ),
+              SizedBox(height: 5,),
               Container(
                 margin: EdgeInsets.only(bottom: 20.0),
-                child: TextFormField(
-                  decoration: InputDecoration(
-                    labelText: '주소',
-                    border: OutlineInputBorder(),
-                    prefixIcon: Icon(Icons.home),
-                  ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return '주소를 입력해주세요.';
-                    }
-                    return null;
-                  },
+                padding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.grey),
+                  borderRadius: BorderRadius.circular(4.0),
+                ),
+                child: Text(
+                  name,
+                  style: TextStyle(fontSize: 16.0),
                 ),
               ),
+              Text(
+                '나이',
+                style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w700,
+                    color: (Colors.black),
+                    fontFamily: 'Pretendard'),
+              ),
+              SizedBox(height: 5,),
+
               Container(
                 margin: EdgeInsets.only(bottom: 20.0),
-                child: TextFormField(
-                  decoration: InputDecoration(
-                    labelText: '나이',
-                    border: OutlineInputBorder(),
-                    prefixIcon: Icon(Icons.access_time_filled),
-                  ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return '나이를 입력해주세요.';
-                    }
-                    return null;
-                  },
+                padding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.grey),
+                  borderRadius: BorderRadius.circular(4.0),
+                ),
+                child: Text(
+                  age,
+                  style: TextStyle(fontSize: 16.0),
                 ),
               ),
+              Text(
+                '연락처',
+                style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w700,
+                    color: (Colors.black),
+                    fontFamily: 'Pretendard'),
+              ),
+              SizedBox(height: 5,),
               Container(
                 margin: EdgeInsets.only(bottom: 20.0),
-                child: TextFormField(
-                  decoration: InputDecoration(
-                    labelText: '연락처',
-                    border: OutlineInputBorder(),
-                    prefixIcon: Icon(Icons.account_box_rounded),
-                  ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return '연락처를 입력해주세요.';
-                    }
-                    return null;
-                  },
+                padding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.grey),
+                  borderRadius: BorderRadius.circular(4.0),
+                ),
+                child: Text(
+                  call,
+                  style: TextStyle(fontSize: 16.0),
                 ),
               ),
-              Container(
-                margin: EdgeInsets.only(bottom: 20.0),
-                child: TextFormField(
-                  decoration: InputDecoration(
-                    labelText: '아이디',
-                    border: OutlineInputBorder(),
-                    prefixIcon: Icon(Icons.person),
-                  ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return '아이디를 입력해주세요.';
-                    }
-                    return null;
-                  },
-                ),
-              ),
-              Container(
-                margin: EdgeInsets.only(bottom: 20.0),
-                child: TextFormField(
-                  decoration: InputDecoration(
-                    labelText: '비밀번호',
-                    border: OutlineInputBorder(),
-                    prefixIcon: Icon(Icons.lock),
-                  ),
-                  obscureText: true,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return '비밀번호를 입력해주세요.';
-                    }
-                    return null;
-                  },
-                ),
-              ),
-              SizedBox(height: 20,),
+
+              SizedBox(height: 80,),
 
               Container(
                 height: 48,
@@ -182,17 +177,10 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
-                      // 로그인 로직 처리
-                      ScaffoldMessenger.of(context)
-                          .showSnackBar(SnackBar(content: Text('회원가입 처리 중...')));
-
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => LoginPage()), // RegisterScreen()을 새로운 화면으로 변경하세요.
-                      );
+                      Navigator.pop(context);
                     }
                   },
-                  child: Text('회원가입',
+                  child: Text('뒤로가기',
                     style: TextStyle(
                       fontSize: 20,
                     ),
