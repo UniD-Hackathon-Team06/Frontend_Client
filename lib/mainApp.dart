@@ -1,165 +1,52 @@
-// main_page.dart
+// main_screen.dart
 import 'package:flutter/material.dart';
-import 'package:frontendclient/home.dart';
+import 'home.dart';
+import 'message.dart';
+import 'mypage.dart';
 
-
-void main() {
-  runApp(MaterialApp(
-    debugShowCheckedModeBanner: false,
-    home: MainApp(), // MainApp을 호출하도록 수정
-  ));
-}
-
-class MainApp extends StatefulWidget {
-  const MainApp({Key? key}) : super(key: key);
-
+class MainScreen extends StatefulWidget {
   @override
-  _MainApp createState() => _MainApp();
+  _MainScreenState createState() => _MainScreenState();
 }
 
-class _MainApp extends State<MainApp> {
-  int _currentIndex = 0;
+class _MainScreenState extends State<MainScreen> {
+  int _selectedIndex = 0; // 현재 선택된 탭 인덱스
+
+  // 각 인덱스에 해당하는 페이지 위젯들을 리스트로 관리합니다.
+  final List<Widget> _pageOptions = [
+    MessagePage(), // 인덱스 0
+    HomePage(),    // 인덱스 1
+    MyPage(),   // 인덱스 2, 마이페이지 위젯을 추가하면 됩니다.
+  ];
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index; // 선택된 탭의 인덱스를 업데이트
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: IndexedStack(
-        index: _currentIndex,
-        children: [
-          HomePage(),
-          HomePage(),
-          HomePage(),
-          HomePage(),
+      body: _pageOptions.elementAt(_selectedIndex), // 현재 선택된 페이지를 보여줌
+      bottomNavigationBar: BottomNavigationBar(
+        items: <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.question_answer),
+            label: '안부인사',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: '홈',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: '마이페이지',
+          ),
+          // 여기에 다른 BottomNavigationBarItem을 추가할 수 있습니다.
         ],
-      ),
-      extendBody: true,
-      bottomNavigationBar: Container(
-        decoration: BoxDecoration(boxShadow: [
-          BoxShadow(
-            color: const Color.fromARGB(255, 212, 212, 212), // 그림자 색상
-            blurRadius: 20, // 그림자의 흐림 정도
-            spreadRadius: 4, // 그림자의 확산 정도
-            offset: Offset(0, 1), // 그림자의 위치 (가로, 세로)
-          ),
-        ]),
-        height: 120,
-        child: ClipRRect(
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(30.0),
-            topRight: Radius.circular(30.0),
-          ),
-          child: BottomNavigationBar(
-            type: BottomNavigationBarType.fixed,
-            currentIndex: _currentIndex,
-            backgroundColor: Colors.white,
-            /*
-            selectedItemColor: Colors.black,
-            unselectedItemColor: Colors.grey,
-            showSelectedLabels: false,
-            showUnselectedLabels: false,
-            */
-
-            onTap: (int index) {
-              print(index);
-              setState(() {
-                _currentIndex = index;
-              });
-              print(_currentIndex);
-            },
-
-            items: [
-              BottomNavigationBarItem(
-                icon: Column(
-                  children: [
-                    Container(
-                      margin: EdgeInsets.only(top: 0, bottom: 5),
-                      height: 25,
-                      child: _currentIndex == 0
-                          ? Image.asset('assets/images/home.png')
-                          : Image.asset('assets/images/home.png', color: Color.fromRGBO(217, 217, 217, 1),),
-                    ),
-                    Text(
-                      '홈',
-                      style: TextStyle(
-                        color: Color.fromRGBO(48, 48, 48, 0.8),
-                        fontSize: 10,
-                        fontFamily: 'Pretendard',
-                      ),
-                    ),
-                  ],
-                ),
-                label: '', // 라벨은 여기서 빈 문자열로 설정
-              ),
-              BottomNavigationBarItem(
-                icon: Column(
-                  children: [
-                    Container(
-                        margin: EdgeInsets.only(top: 0, bottom: 5),
-                        height: 25,
-                        child: _currentIndex == 1
-                            ? Image.asset('assets/images/QnA.png')
-                            : Image.asset('assets/images/QnA.png', color: Color.fromRGBO(217, 217, 217, 1),)
-                    ),
-                    Text(
-                      '블러팅',
-                      style: TextStyle(
-                        color: Color.fromRGBO(48, 48, 48, 0.8),
-                        fontSize: 10,
-                        fontFamily: 'Pretendard',
-                      ),
-                    ),
-                  ],
-                ),
-                label: '', // 라벨은 여기서 빈 문자열로 설정
-              ),
-              BottomNavigationBarItem(
-                icon: Column(
-                  children: [
-                    Container(
-                      margin: EdgeInsets.only(top: 0, bottom: 5),
-                      height: 25,
-                      child: _currentIndex == 2
-                          ? Image.asset('assets/images/whisper.png')
-                          : Image.asset('assets/images/whisper.png', color: Color.fromRGBO(217, 217, 217, 1),),
-                    ),
-                    Text(
-                      '귓속말',
-                      style: TextStyle(
-                        color: Color.fromRGBO(48, 48, 48, 0.8),
-                        fontSize: 10,
-                        fontFamily: 'Pretendard',
-                      ),
-                    ),
-                  ],
-                ),
-                label: '', // 라벨은 여기서 빈 문자열로 설정
-              ), // ...
-              BottomNavigationBarItem(
-                icon: Column(
-                  children: [
-                    Container(
-                      //color: Colors.amber,
-                      margin: EdgeInsets.only(top: 0, bottom: 5),
-                      height: 25,
-                      child: _currentIndex == 3
-                          ? Image.asset('assets/images/mypage.png')
-                          : Image.asset('assets/images/mypage.png', color: Color.fromRGBO(217, 217, 217, 1),),
-                    ),
-                    Text(
-                      '마이페이지',
-                      style: TextStyle(
-                        color: Color.fromRGBO(48, 48, 48, 0.8),
-                        fontSize: 10,
-                        fontFamily: 'Pretendard',
-                      ),
-                    ),
-                  ],
-                ),
-                label: '', // 라벨은 여기서 빈 문자열로 설정
-              ),
-            ],
-          ),
-        ),
+        currentIndex: _selectedIndex,
+        onTap: _onItemTapped,
       ),
     );
   }

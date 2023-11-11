@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:frontendclient/colors/color.dart';
 import 'package:frontendclient/home.dart';
+import 'package:frontendclient/mainApp.dart';
 import 'package:frontendclient/signup.dart';
 
 
@@ -121,7 +122,7 @@ class _LoginPageState extends State<LoginPage> {
                         .showSnackBar(SnackBar(content: Text('로그인 처리 중...')));
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => HomePage()), // RegisterScreen()을 새로운 화면으로 변경하세요.
+                      MaterialPageRoute(builder: (context) => MainScreen()), // RegisterScreen()을 새로운 화면으로 변경하세요.
                     );
                   }
                 },

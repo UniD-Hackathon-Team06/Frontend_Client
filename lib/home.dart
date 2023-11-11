@@ -216,26 +216,26 @@ Container(
       ],
     ),
       // BottomNavigationBar 추가
-      bottomNavigationBar: BottomNavigationBar(
-        items: <BottomNavigationBarItem>[
-
-          BottomNavigationBarItem(
-            icon: Icon(Icons.question_answer),
-            label: '안부인사',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: '홈',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: '마이페이지',
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Color(DefinedColor.lightblue),
-        onTap: _onItemTapped,
-      ),
+      // bottomNavigationBar: BottomNavigationBar(
+      //   items: <BottomNavigationBarItem>[
+      //
+      //     BottomNavigationBarItem(
+      //       icon: Icon(Icons.question_answer),
+      //       label: '안부인사',
+      //     ),
+      //     BottomNavigationBarItem(
+      //       icon: Icon(Icons.home),
+      //       label: '홈',
+      //     ),
+      //     BottomNavigationBarItem(
+      //       icon: Icon(Icons.person),
+      //       label: '마이페이지',
+      //     ),
+      //   ],
+      //   currentIndex: _selectedIndex,
+      //   selectedItemColor: Color(DefinedColor.lightblue),
+      //   onTap: _onItemTapped,
+      // ),
     );
   }
 }

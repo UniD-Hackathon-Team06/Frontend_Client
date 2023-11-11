@@ -14,24 +14,18 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MessagePage(),
+      home: MyPage(),
     );
   }
 }
 
-class MessagePage extends StatefulWidget {
+class MyPage extends StatefulWidget {
   @override
-  _MessagePageState createState() => _MessagePageState();
+  _MyPageState createState() => _MyPageState();
 }
 
-class _MessagePageState extends State<MessagePage> {
-  int _selectedIndex = 0;
+class _MyPageState extends State<MyPage> {
 
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
