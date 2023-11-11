@@ -52,9 +52,10 @@ class MyPage extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            '이현정님',
+                            '노태윤님',
                             style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                           ),
+                          SizedBox(height: 6,),
                           Text(
                             '프로필 열기',
                             style: TextStyle(fontSize: 14, color: Colors.grey),
