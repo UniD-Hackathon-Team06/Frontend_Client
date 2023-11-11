@@ -49,10 +49,10 @@ class _HomePageState extends State<HomePage> {
 
         Container(
           alignment: Alignment.topLeft,
-          width: 200,
-          height: 60,
+          width: 223,
+          height: 54,
           child: Text(
-            'SilverCare',
+            'SilverCare.',
             style: TextStyle(
                 fontSize: 40,
                 fontWeight: FontWeight.w700,
@@ -60,7 +60,6 @@ class _HomePageState extends State<HomePage> {
                 fontFamily: 'Pretendard'),
           ),
         ),
-        SizedBox(height: 10,),
         Container(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center, // 중앙 정렬을 위해 추가
@@ -72,8 +71,8 @@ class _HomePageState extends State<HomePage> {
                 child: Text(
                   '노태윤',
                   style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.w700,
+                    fontSize: 22,
+                    fontWeight: FontWeight.w600,
                     color: Colors.black,
                     fontFamily: 'Pretendard',
                   ),
@@ -88,8 +87,8 @@ class _HomePageState extends State<HomePage> {
                 child: Text(
                   '님 환영합니다.',
                   style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w700,
+                    fontSize: 19,
+                    fontWeight: FontWeight.w600,
                     color: Colors.black,
                     fontFamily: 'Pretendard',
                   ),
@@ -98,7 +97,7 @@ class _HomePageState extends State<HomePage> {
             ],
           ),
         ),
-       SizedBox(height:10),
+       SizedBox(height:20),
        Container(
          width: 340,
           height: 120,
@@ -123,19 +122,91 @@ class _HomePageState extends State<HomePage> {
               Text('날짜',
              style: TextStyle(
                fontSize: 25,
-               fontWeight: FontWeight.w700,
+               fontWeight: FontWeight.w600,
+               fontFamily: 'Pretendard',
              ),),
               SizedBox(height: 10,),
               Text('2023.11.11',
               style: TextStyle(
-                fontSize: 20
+                fontSize: 20,
+                fontFamily: 'Pretendard',
               ),),
              ]),
               Icon(Icons.cloud, size: 48.0), // 구름 아이콘
             ],
           ),
         ),
-
+SizedBox(height:40),
+Container(
+      width: 340,
+      height: 120,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(25.0),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.5),
+            spreadRadius: 5,
+            blurRadius: 7,
+            offset: Offset(0, 3), // changes position of shadow
+          ),
+        ],
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          Column(
+              mainAxisSize: MainAxisSize.min, // Column 크기를 자식에 맞춤
+              children:[
+                Text('강수 확률이 높아요\n우산을 챙기세요',
+                  style: TextStyle(
+                    fontSize: 25,
+                    fontWeight: FontWeight.w500,
+                    fontFamily: 'Pretendard',
+                  ),),
+              ]),
+          Icon(Icons.cloud, size: 48.0), // 구름 아이콘
+        ],
+      ),
+    ),
+        SizedBox(height:40),
+        Container(
+          width: 340,
+          height: 120,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(25.0),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.5),
+                spreadRadius: 5,
+                blurRadius: 7,
+                offset: Offset(0, 3), // changes position of shadow
+              ),
+            ],
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Column(
+                  mainAxisSize: MainAxisSize.min, // Column 크기를 자식에 맞춤
+                  children:[
+                    Text('날짜',
+                      style: TextStyle(
+                        fontSize: 25,
+                        fontWeight: FontWeight.w700,
+                        fontFamily: 'Pretendard',
+                      ),),
+                    SizedBox(height: 10,),
+                    Text('2023.11.11',
+                      style: TextStyle(
+                          fontSize: 20
+                      ),),
+                  ]),
+              Icon(Icons.cloud, size: 48.0), // 구름 아이콘
+            ],
+          ),
+        ),
       ],
     ),
       // BottomNavigationBar 추가
