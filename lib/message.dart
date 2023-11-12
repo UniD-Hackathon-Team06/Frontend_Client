@@ -77,7 +77,7 @@ class _MessagePageState extends State<MessagePage> {
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) {
-        return AlertDialog(😢
+        return AlertDialog(
           title: Text('안부인사가 늦으시네요...'),
           content: Text(message),
           actions: <Widget>[
